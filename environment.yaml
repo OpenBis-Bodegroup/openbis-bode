@@ -1,0 +1,10 @@
+name: openbis
+channels:
+  - conda-forge
+  - defaults
+  - pip
+dependencies:
+  - python = 3.11
+  - pyyaml
+  - poppler
+  - pdf2image
