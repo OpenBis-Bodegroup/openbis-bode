@@ -8,3 +8,4 @@ dependencies:
   - pyyaml
   - poppler
   - pdf2image
+  - pybis
