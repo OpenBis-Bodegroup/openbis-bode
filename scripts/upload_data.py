@@ -3,7 +3,7 @@ from typing import Dict, List
 
 from pybis import Openbis
 
-from .utils import get_config
+from scripts.utils import get_config
 
 CONFIG = get_config()
 
@@ -58,13 +58,13 @@ if __name__ == "__main__":
     # per user project/ experiment
     # per experiment upload dataset, but check if that dataset is already uploaded
     for user in users:
-        user_files = [fn for fn in all_dataset if f"Bode - {user}/" in fn.name]
+        user_files = [fn for fn in all_dataset if f"Bode - {user}-" in fn.name]
         for proj in get_projects(openbis=openbis, user=user):
             for exp in get_experiments(openbis=openbis, user=user, project=proj):
                 data_names = [
                     str(fn)
                     for fn in user_files
-                    if f"Bode - {user}/{proj}/{exp}" in fn.name
+                    if f"Bode - {user}-{proj}-{exp}" in fn.name
                 ]
                 for existing_fn in get_datasets(
                     openbis=openbis, experiment=exp, dataset_type=dataset_type
