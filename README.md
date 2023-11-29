@@ -24,5 +24,5 @@ conda activate ./env
     - DESCRIPTION: description of the data, does not need to be upper case
 
 ## TODO
-[ ] Connection to the data server should be fixed, at the moment, manually connect to the server from PC then use that path as the data path to the data server.
-[ ] User listing is not ideal at the moment.
+- [ ] Connection to the data server should be fixed, at the moment, manually connect to the server from PC then use that path as the data path to the data server.
+- [ ] User listing is not ideal at the moment.
