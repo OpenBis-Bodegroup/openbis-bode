@@ -67,7 +67,7 @@ if __name__ == "__main__":
     # per experiment upload dataset, but check if that dataset is already uploaded
     for user in users:
         user_files = [
-            fn for fn in all_dataset if f"{user.lower()}" in str(fn.name).lower()
+            fn for fn in all_dataset if f"{user.upper()}" in str(fn.name).upper()
         ]
         LOGGER.info(f"Processing user: {user}, has {len(user_files)} pdf files")
         for proj in get_projects(
@@ -76,7 +76,7 @@ if __name__ == "__main__":
             for exp in get_experiments(
                 openbis=openbis, project=proj
             ):  # exp = "/{usr}/projectname/experimentname/"
-                data_prefix = "-".join(exp.lower().split("/")[1:])
+                data_prefix = "-".join(exp.upper().split("/")[1:])
                 data_names = [
                     str(fn) for fn in user_files if f"Bode - {data_prefix}" in fn.name
                 ]
