@@ -1,3 +1,4 @@
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -7,7 +8,7 @@ from pybis import Openbis
 from utils import get_config, timeit
 
 CONFIG = get_config()
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 LOGGER = logging.getLogger(
     __name__,
 )
@@ -47,20 +48,51 @@ def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[s
 
 
 @timeit
-def get_all_pdf_files(instrument_dir: Path) -> List[Path]:
-    return list(instrument_dir.glob("*/pdf/*.pdf"))
+def get_all_pdf_files(
+    instrument_dir: Path, hierarchy: str = "*/pdf/*.pdf"
+) -> List[Path]:
+    return list(instrument_dir.glob(hierarchy))
+
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--dataset_type",
+        type=str,
+        default="COMPACT",
+        help="dataset type, e.g. COMPACT, RAW, etc.",
+    )
+    parser.add_argument(
+        "--dataset_ab_dir",
+        type=str,
+        default="/Volumes/Bruker-Compact-1/",
+        help="absolute path to the dataset directory",
+    )
+    parser.add_argument(
+        "--hierarchy",
+        type=str,
+        default="*/pdf/*.pdf",
+        help="hierarchy to search for pdf files",
+    )
+    parser.add_argument(
+        "--ab_prefix",
+        type=str,
+        default="Bode - ",
+        help="absolute prefix of the pdf file name",
+    )
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == "__main__":
-    dataset_type = "COMPACT"
-    dataset_ab_dir = Path("/Volumes/Bruker-Compact-1/")
+    args = get_args()
 
     openbis = get_openbis(CONFIG)
 
     users = get_all_users(openbis)
     LOGGER.info(f"There are {len(users)} registered users in openBIS: {users}")
-    all_dataset = get_all_pdf_files(dataset_ab_dir)
-    LOGGER.info(f"Found {len(all_dataset)} pdf files in {dataset_ab_dir}")
+    all_dataset = get_all_pdf_files(args.dataset_ab_dir, hierarchy=args.hierarchy)
+    LOGGER.info(f"Found {len(all_dataset)} pdf files in {args.dataset_ab_dir}")
 
     # space for all users
     # per user project/ experiment
@@ -69,7 +101,7 @@ if __name__ == "__main__":
         user_files = [
             fn for fn in all_dataset if f"{user.upper()}" in str(fn.name).upper()
         ]
-        LOGGER.info(f"Processing user: {user}, has {len(user_files)} pdf files")
+        LOGGER.info(f"Processing user: {user}, has {len(user_files)} files")
         for proj in get_projects(
             openbis=openbis, user=user
         ):  # proj = "/{usr}/projectname/"
@@ -78,11 +110,13 @@ if __name__ == "__main__":
             ):  # exp = "/{usr}/projectname/experimentname/"
                 data_prefix = "-".join(exp.upper().split("/")[1:])
                 data_names = [
-                    str(fn) for fn in user_files if f"Bode - {data_prefix}" in fn.name
+                    str(fn)
+                    for fn in user_files
+                    if f"{args.ab_prefix}{data_prefix}" in fn.name
                 ]
                 # check if dataset already exists
                 for existing_fn in get_datasets(
-                    openbis=openbis, experiment=exp, dataset_type=dataset_type
+                    openbis=openbis, experiment=exp, dataset_type=args.dataset_type
                 ):
                     for dn in data_names:
                         if existing_fn in dn:
@@ -91,14 +125,11 @@ if __name__ == "__main__":
                 # upload new datasets
                 for data_name in data_names:
                     ds_new = openbis.new_dataset(
-                        type=dataset_type,
+                        type=args.dataset_type,
                         experiment=openbis.get_experiment(exp),
                         files=data_name,
                         props={
                             "$name": data_name.split("/")[-1].split(".")[0],
-                            "notes": data_name.split("/")[-1]
-                            .split(".")[0]
-                            .split("-")[4],
                         },
                     )
                     ds_new.save()
