@@ -8,7 +8,7 @@ import yaml  # type: ignore
 from path import CONFIG_PATH
 from pdf2image import convert_from_path
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 LOGGER = logging.getLogger(
     __name__,
 )
