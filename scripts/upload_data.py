@@ -8,7 +8,12 @@ from pybis import Openbis
 from utils import get_config, timeit
 
 CONFIG = get_config()
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.basicConfig(
+    stream=sys.stdout,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 LOGGER = logging.getLogger(
     __name__,
 )
