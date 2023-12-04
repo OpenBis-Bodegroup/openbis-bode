@@ -32,4 +32,4 @@ $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir "${HPLC_DIR3
 $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir "${HPLC_DIR4}" --hierarchy "**/*.pdf" --ab_prefix ""
 $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir "${HPLC_DIR5}" --hierarchy "**/*.pdf" --ab_prefix ""
 $PYTHON scripts/upload_data.py --dataset_type IR --dataset_ab_dir "${IR_DIR}" --hierarchy "**/*.pdf" --ab_prefix ""
-$PYTHON scripts/upload_data.py --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_preprocessed/*" --ab_prefix "Bode - "
+$PYTHON scripts/upload_data.py --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_reprocessed/*" --ab_prefix "Bode - "
