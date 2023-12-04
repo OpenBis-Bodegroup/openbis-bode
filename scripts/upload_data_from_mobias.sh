@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 ROOD_DIR="$(dirname "$SCRIPT_DIR")"
-PYTHON=$ROOD_DIR/env/bin/python
+PYTHON="${ROOD_DIR}/env/bin/python"
 
 # COMPACT_DIR="/Volumes/Bode/Bruker-Compact-1"
 # MALDI_DIR1=""
