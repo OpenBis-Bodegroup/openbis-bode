@@ -93,7 +93,7 @@ if __name__ == "__main__":
     users = get_all_users(openbis)
     LOGGER.info(f"There are {len(users)} registered users in openBIS: {users}")
     all_dataset = get_all_pdf_files(dataset_ab_dir, hierarchy=args.hierarchy)
-    LOGGER.info(f"Found {len(all_dataset)} pdf files in {dataset_ab_dir}")
+    LOGGER.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
 
     # space for all users
     # per user project/ experiment
