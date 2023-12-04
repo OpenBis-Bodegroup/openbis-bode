@@ -48,7 +48,7 @@ def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[s
 
 @timeit
 def get_all_pdf_files(instrument_dir: Path) -> List[Path]:
-    return list(instrument_dir.glob("**/pdf/*.pdf"))
+    return list(instrument_dir.glob("*/pdf/*.pdf"))
 
 
 if __name__ == "__main__":
