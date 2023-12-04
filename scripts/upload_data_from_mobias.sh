@@ -1,31 +1,35 @@
 #!/bin/bash
 
-COMPACT_DIR=PATH_TO_COMPACT_DIR
-MALDI_DIR1=PATH_TO_MALDI_DIR
-MALDI_DIR2=PATH_TO_MALDI_DIR
-AMAZON_LCMS_DIR=PATH_TO_AMAZON_LCMS_DIR
-AGILENT_LCMS_DIR1=PATH_TO_AGILENT_LCMS_DIR
-AGILENT_LCMS_DIR2=PATH_TO_AGILENT_LCMS_DIR
-AGILENT_GCMS_DIR=PATH_TO_AGILENT_GCMS_DIR
-HPLC_DIR1=PATH_TO_HPLC_DIR
-HPLC_DIR2=PATH_TO_HPLC_DIR
-HPLC_DIR3=PATH_TO_HPLC_DIR
-HPLC_DIR4=PATH_TO_HPLC_DIR
-HPLC_DIR5=PATH_TO_HPLC_DIR
-IR_DIR=PATH_TO_IR_DIR
-COMPACT_REPRO_DIR=PATH_TO_COMPACT_REPRO_DIR
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+ROOD_DIR="$(dirname "$SCRIPT_DIR")"
+PYTHON=$ROOD_DIR/env/bin/python
 
-python scripts/upload_data.py --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
-python scripts/upload_data.py --dataset_type MALDI --dataset_ab_dir $MALDI_DIR1 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
-python scripts/upload_data.py --dataset_type MALDI --dataset_ab_dir $MALDI_DIR2 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
-python scripts/upload_data.py --dataset_type AMAZON-LCMS --dataset_ab_dir $AMAZON_LCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
-python scripts/upload_data.py --dataset_type AGILENT-LCMS --dataset_ab_dir $AGILENT_LCMS_DIR1 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode_"
-python scripts/upload_data.py --dataset_type AGILENT-LCMS --dataset_ab_dir $AGILENT_LCMS_DIR2 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode_"
-python scripts/upload_data.py --dataset_type AGILENT-GCMS --dataset_ab_dir $AGILENT_GCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
-python scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR1 --hierarchy "**/*.pdf" --ab_prefix ""
-python scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR2 --hierarchy "**/*.pdf" --ab_prefix ""
-python scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR3 --hierarchy "**/*.pdf" --ab_prefix ""
-python scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR4  --hierarchy "**/*.pdf" --ab_prefix ""
-python scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR5 --hierarchy "**/*.pdf" --ab_prefix ""
-python scripts/upload_data.py --dataset_type IR --dataset_ab_dir $IR_DIR --hierarchy "**/*.pdf" --ab_prefix ""
-python scripts/upload_data.py --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_preprocessed/*" --ab_prefix "Bode - "
+# COMPACT_DIR="/Volumes/Bode/Bruker-Compact-1"
+# MALDI_DIR1=""
+# MALDI_DIR2=""
+AMAZON_LCMS_DIR="/Volumes/Bode/Bruker-Amazon-1"
+# AGILENT_LCMS_DIR1=""
+# AGILENT_LCMS_DIR2=""
+# AGILENT_GCMS_DIR=""
+# HPLC_DIR1=""
+# HPLC_DIR2=""
+# HPLC_DIR3=""
+# HPLC_DIR4=""
+# HPLC_DIR5=""
+# IR_DIR=""
+# COMPACT_REPRO_DIR=""
+
+# $PYTHON scripts/upload_data.py --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
+# $PYTHON scripts/upload_data.py --dataset_type MALDI --dataset_ab_dir $MALDI_DIR1 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
+# $PYTHON scripts/upload_data.py --dataset_type MALDI --dataset_ab_dir $MALDI_DIR2 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
+$PYTHON scripts/upload_data.py --dataset_type AMAZON-LCMS --dataset_ab_dir $AMAZON_LCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
+# $PYTHON scripts/upload_data.py --dataset_type AGILENT-LCMS --dataset_ab_dir $AGILENT_LCMS_DIR1 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode_"
+# $PYTHON scripts/upload_data.py --dataset_type AGILENT-LCMS --dataset_ab_dir $AGILENT_LCMS_DIR2 --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode_"
+# $PYTHON scripts/upload_data.py --dataset_type AGILENT-GCMS --dataset_ab_dir $AGILENT_GCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
+# $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR1 --hierarchy "**/*.pdf" --ab_prefix ""
+# $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR2 --hierarchy "**/*.pdf" --ab_prefix ""
+# $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR3 --hierarchy "**/*.pdf" --ab_prefix ""
+# $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR4  --hierarchy "**/*.pdf" --ab_prefix ""
+# $PYTHON scripts/upload_data.py --dataset_type HPLC --dataset_ab_dir $HPLC_DIR5 --hierarchy "**/*.pdf" --ab_prefix ""
+# $PYTHON scripts/upload_data.py --dataset_type IR --dataset_ab_dir $IR_DIR --hierarchy "**/*.pdf" --ab_prefix ""
+# $PYTHON scripts/upload_data.py --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_preprocessed/*" --ab_prefix "Bode - "
