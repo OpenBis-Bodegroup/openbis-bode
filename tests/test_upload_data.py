@@ -76,4 +76,6 @@ def test_return_new_idx(
         data_names=data_names,
     )
     assert len(new_idx) == len(data_names) - 1
-    assert new_idx == [nn for nn in data_names if nn.name != ochoung_data]
+    assert new_idx == [
+        ii for ii, nn in enumerate(data_names) if nn.name != ochoung_data
+    ]
