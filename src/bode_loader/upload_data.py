@@ -30,8 +30,7 @@ def get_openbis(config: Dict = CONFIG) -> Openbis:
     return Openbis(config["host"]["host_name"], token=config["host"]["token"])
 
 
-def get_all_users(openbis: Openbis) -> List[str]:
-    # TODO: get all users, not ideal
+def get_all_spaces(openbis: Openbis) -> List[str]:
     spaces = openbis.get_spaces()
     return spaces.df["code"][spaces.df["registrator"] != "system"].tolist()
 
@@ -94,7 +93,7 @@ def main():
 
     openbis = get_openbis(CONFIG)
 
-    users = get_all_users(openbis)
+    users = get_all_spaces(openbis)  # all the users' spaces
     LOGGER.info(f"There are {len(users)} registered users in openBIS: {users}")
     all_dataset = get_all_files(dataset_ab_dir, hierarchy=args.hierarchy)
     LOGGER.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
