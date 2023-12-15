@@ -9,15 +9,17 @@ from pybis import Openbis
 from bode_loader.utils import get_config, timeit
 
 CONFIG = get_config()
-logging.basicConfig(
-    stream=sys.stdout,
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)-8s %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+log_formatter = logging.Formatter(
+    "[%(asctime)s] [%(levelname)s] [%(filename)s:%(lineno)d:%(funcName)s] %(message)s"
 )
-LOGGER = logging.getLogger(
-    __name__,
-)
+for handler in logger.handlers:
+    logger.removeHandler(handler)
+handler_out = logging.StreamHandler(sys.stdout)
+handler_out.setFormatter(log_formatter)
+logger.addHandler(handler_out)
 
 
 def get_openbis(config: Dict = CONFIG) -> Openbis:
@@ -88,9 +90,9 @@ def return_new_idx(
         openbis=openbis, experiment=experiment, dataset_type=dataset_type
     )
     new_idx = []
-    for dn in data_names:
+    for ii, dn in enumerate(data_names):
         if all([dn.name not in sd for sd in saved_datasets]):
-            new_idx.append(dn)
+            new_idx.append(ii)
     return new_idx
 
 
@@ -129,15 +131,16 @@ def get_args():
     return args
 
 
-def main(args: argparse.Namespace):
+def main():
+    args = get_args()
     dataset_ab_dir = Path(args.dataset_ab_dir)
 
     openbis = get_openbis(CONFIG)
 
     users = get_all_spaces(openbis)  # all the users' spaces
-    LOGGER.info(f"There are {len(users)} registered users in openBIS: {users}")
+    logger.info(f"There are {len(users)} registered users in openBIS: {users}")
     all_dataset = get_all_files(dataset_ab_dir, hierarchy=args.hierarchy)
-    LOGGER.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
+    logger.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
 
     # space for all users
     # per user project/ experiment
@@ -146,7 +149,7 @@ def main(args: argparse.Namespace):
         user_files = [
             fn for fn in all_dataset if f"{user.upper()}" in str(fn.name).upper()
         ]
-        LOGGER.info(f"Processing user: {user}, has {len(user_files)} files")
+        logger.info(f"Processing user: {user}, has {len(user_files)} files")
         for proj in get_projects(
             openbis=openbis, user=user
         ):  # proj = "/{usr}/projectname/"
@@ -178,5 +181,4 @@ def main(args: argparse.Namespace):
 
 
 if __name__ == "__main__":
-    args = get_args()
-    main(args)
+    main()
