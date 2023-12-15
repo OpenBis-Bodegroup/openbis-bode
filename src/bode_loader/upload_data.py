@@ -19,14 +19,16 @@ LOGGER = logging.getLogger(
     __name__,
 )
 
-# "/Volumes/compact-20260/*/pdf/Bode - *.pdf"
-# "/Volumes/compact-20260/*/pdf/Bode - AEM-05-093-A-depro-16-3_P1-F-2_1_3336_OA-LCMS-Report.pdf"
-
-# data_name = "Bode - USER_name-PRO_CODE-EXP_CODE-(description).pdf"
-# encode_name = data_name.spilt(".")[0]
-
 
 def get_openbis(config: Dict = CONFIG) -> Openbis:
+    """get openbis instance
+
+    Args:
+        config (Dict, optional): config of openbis setting. Defaults to CONFIG.
+
+    Returns:
+        Openbis: openbis instance
+    """
     return Openbis(config["host"]["host_name"], token=config["host"]["token"])
 
 
@@ -50,6 +52,46 @@ def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[s
         experiment=experiment, type=dataset_type, props=["$NAME"]
     )
     return datasets.df["$NAME"].tolist()
+
+
+def upload_new_dataset(
+    openbis: Openbis, experiment: str, dataset_type: str, data_name: Path
+) -> int:
+    ds_new = openbis.new_dataset(
+        type=dataset_type,
+        experiment=openbis.get_experiment(experiment),
+        files=str(data_name),
+        props={
+            "$name": data_name.name,
+        },
+    )
+    ds_new.save()
+    # return the dataset id
+    return ds_new.data["code"]
+
+
+def return_new_idx(
+    openbis: Openbis, experiment: str, dataset_type: str, data_names: List[Path]
+) -> List[int]:
+    """Get all the existing datasets in OpenBis and return only the new data's index
+
+    Args:
+        openbis (Openbis): openbis instance
+        experiment (str): experiment code, e.t., "/{usr}/projectname/experimentname"
+        dataset_type (str): dataset type, e.g., "COMPACT", "RAW", etc.
+        data_names (List[Path]): list of data names
+
+    Returns:
+        List[int]: list of new dataset index
+    """
+    saved_datasets = get_datasets(
+        openbis=openbis, experiment=experiment, dataset_type=dataset_type
+    )
+    new_idx = []
+    for dn in data_names:
+        if all([dn.name not in sd for sd in saved_datasets]):
+            new_idx.append(dn)
+    return new_idx
 
 
 @timeit
@@ -87,8 +129,7 @@ def get_args():
     return args
 
 
-def main():
-    args = get_args()
+def main(args: argparse.Namespace):
     dataset_ab_dir = Path(args.dataset_ab_dir)
 
     openbis = get_openbis(CONFIG)
@@ -114,30 +155,28 @@ def main():
             ):  # exp = "/{usr}/projectname/experimentname/"
                 data_prefix = "-".join(exp.upper().split("/")[1:])
                 data_names = [
-                    str(fn)
+                    fn
                     for fn in user_files
                     if f"{args.ab_prefix}{data_prefix}" in fn.name
                 ]
                 # check if dataset already exists
-                for existing_fn in get_datasets(
-                    openbis=openbis, experiment=exp, dataset_type=args.dataset_type
-                ):
-                    for dn in data_names:
-                        if existing_fn in dn:
-                            # if existing_fn in dn, then remove it from data_names
-                            data_names.remove(dn)
+                new_idx = return_new_idx(
+                    openbis=openbis,
+                    experiment=exp,
+                    dataset_type=args.dataset_type,
+                    data_names=data_names,
+                )
+                data_names = [data_names[idx] for idx in new_idx]
                 # upload new datasets
                 for data_name in data_names:
-                    ds_new = openbis.new_dataset(
-                        type=args.dataset_type,
-                        experiment=openbis.get_experiment(exp),
-                        files=data_name,
-                        props={
-                            "$name": data_name.split("/")[-1].split(".")[0],
-                        },
+                    upload_new_dataset(
+                        openbis=openbis,
+                        experiment=exp,
+                        dataset_type=args.dataset_type,
+                        data_name=data_name,
                     )
-                    ds_new.save()
 
 
 if __name__ == "__main__":
-    main()
+    args = get_args()
+    main(args)
