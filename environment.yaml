@@ -9,3 +9,4 @@ dependencies:
   - poppler
   - pdf2image
   - pybis
+  - pytest

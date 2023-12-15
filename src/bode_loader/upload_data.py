@@ -5,7 +5,8 @@ from pathlib import Path
 from typing import Dict, List
 
 from pybis import Openbis
-from utils import get_config, timeit
+
+from bode_loader.utils import get_config, timeit
 
 CONFIG = get_config()
 logging.basicConfig(

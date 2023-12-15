@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bode-openbis-loader"
+authors = [
+    {name = "Oh-hyeon Choung", email = "ohhyeon.choung@gmail.com"},
+]
+description = "OpenBIS loader for BODE group"
+readme = "README.md"
+requires-python = ">=3.11"
+dynamic = ["version"]
+
+[project.scripts]
+upload_data = "bode_loader.upload_data:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "bode_loader.__version__"}
+
+
+[options.packages.find]
+where="src"

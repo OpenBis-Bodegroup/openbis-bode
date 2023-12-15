@@ -5,8 +5,9 @@ from functools import wraps
 from pathlib import Path
 
 import yaml  # type: ignore
-from path import CONFIG_PATH
 from pdf2image import convert_from_path
+
+from bode_loader.path import CONFIG_PATH
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 LOGGER = logging.getLogger(
