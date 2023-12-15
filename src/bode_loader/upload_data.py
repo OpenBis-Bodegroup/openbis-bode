@@ -54,9 +54,7 @@ def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[s
 
 
 @timeit
-def get_all_pdf_files(
-    instrument_dir: Path, hierarchy: str = "*/pdf/*.pdf"
-) -> List[Path]:
+def get_all_files(instrument_dir: Path, hierarchy: str = "*/pdf/*.pdf") -> List[Path]:
     return list(instrument_dir.glob(hierarchy))
 
 
@@ -90,7 +88,7 @@ def get_args():
     return args
 
 
-if __name__ == "__main__":
+def main():
     args = get_args()
     dataset_ab_dir = Path(args.dataset_ab_dir)
 
@@ -98,7 +96,7 @@ if __name__ == "__main__":
 
     users = get_all_users(openbis)
     LOGGER.info(f"There are {len(users)} registered users in openBIS: {users}")
-    all_dataset = get_all_pdf_files(dataset_ab_dir, hierarchy=args.hierarchy)
+    all_dataset = get_all_files(dataset_ab_dir, hierarchy=args.hierarchy)
     LOGGER.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
 
     # space for all users
@@ -140,3 +138,7 @@ if __name__ == "__main__":
                         },
                     )
                     ds_new.save()
+
+
+if __name__ == "__main__":
+    main()
