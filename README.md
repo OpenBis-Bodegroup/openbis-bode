@@ -16,7 +16,7 @@ conda activate ./env
 
 ## Important notes
 - Data name should follow the convention:
-    - Please no not use '-' in any of the names, as this is used as a separator
+    - Please no not use '-' and '.' in any of the names, as this is used as a separator
     - `Bode - {USER_ETH_ID_UPPER_CASE}-{PROJECT_NAME_UPPER_CASE}-{EXPERIMENT_NAME_UPPER_CASE}-{DESCRIPTION}`
     - USER_ETH_ID: ETH ID of the user, upper case
     - PROJECT_NAME: name of the project that the user made in openbis, upper case
