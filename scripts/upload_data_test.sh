@@ -6,4 +6,4 @@ PYTHON="${ROOD_DIR}/env/bin/python"
 
 TEST_DIR="${ROOD_DIR}/tests/assets"
 
-$PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type TEST --dataset_ab_dir $TEST_DIR --hierarchy "*" --ab_prefix "BODE - "
+$PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type TEST --dataset_ab_dir $TEST_DIR --hierarchy "*.txt" "*.pdf" --ab_prefix "BODE - "

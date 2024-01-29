@@ -97,8 +97,22 @@ def return_new_idx(
 
 
 @timeit
-def get_all_files(instrument_dir: Path, hierarchy: str = "*/pdf/*.pdf") -> List[Path]:
-    return list(instrument_dir.glob(hierarchy))
+def get_all_files(
+    instrument_dir: Path, hierarchy: List[str] = ["*/pdf/*.pdf"]
+) -> List[Path]:
+    """get all the files in the instrument directory
+
+    Args:
+        instrument_dir (Path): dir to the instrument folder
+        hierarchy (List[str], optional): list of the file hierarchy. Defaults to ["*/pdf/*.pdf"].
+
+    Returns:
+        List[Path]: list of the flies that match the hierarchy
+    """
+    return_list: List[Path] = []
+    for hier in hierarchy:
+        return_list.extend(list(instrument_dir.glob(hier)))
+    return return_list
 
 
 def get_args():
@@ -118,7 +132,8 @@ def get_args():
     parser.add_argument(
         "--hierarchy",
         type=str,
-        default="*/pdf/*.pdf",
+        nargs="+",
+        default=["*/pdf/*.pdf"],
         help="hierarchy to search for pdf files",
     )
     parser.add_argument(
@@ -131,8 +146,7 @@ def get_args():
     return args
 
 
-def main():
-    args = get_args()
+def main(args: argparse.Namespace):
     dataset_ab_dir = Path(args.dataset_ab_dir)
 
     openbis = get_openbis(CONFIG)
@@ -181,4 +195,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    args = get_args()
+    main(args)
