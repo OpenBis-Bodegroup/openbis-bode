@@ -151,10 +151,13 @@ def main(args: argparse.Namespace):
 
     openbis = get_openbis(CONFIG)
 
-    users = get_all_spaces(openbis)  # all the users' spaces
-    logger.info(f"There are {len(users)} registered users in openBIS: {users}")
     all_dataset = get_all_files(dataset_ab_dir, hierarchy=args.hierarchy)
     logger.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
+    if len(all_dataset) == 0:
+        return 1
+
+    users = get_all_spaces(openbis)  # all the users' spaces
+    logger.info(f"There are {len(users)} registered users in openBIS: {users}")
 
     # space for all users
     # per user project/ experiment
