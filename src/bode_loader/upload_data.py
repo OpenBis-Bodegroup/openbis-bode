@@ -167,6 +167,8 @@ def main(args: argparse.Namespace):
             fn for fn in all_dataset if f"{user.upper()}" in str(fn.name).upper()
         ]
         logger.info(f"Processing user: {user}, has {len(user_files)} files")
+        if len(user_files) == 0:
+            continue
         for proj in get_projects(
             openbis=openbis, user=user
         ):  # proj = "/{usr}/projectname/"
