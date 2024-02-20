@@ -197,6 +197,7 @@ def main(args: argparse.Namespace):
                         dataset_type=args.dataset_type,
                         data_name=data_name,
                     )
+    openbis.logout()
 
 
 if __name__ == "__main__":
