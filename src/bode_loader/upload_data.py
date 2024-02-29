@@ -34,26 +34,36 @@ def get_openbis(config: Dict = CONFIG) -> Openbis:
     return Openbis(config["host"]["host_name"], token=config["host"]["token"])
 
 
+@timeit
 def get_all_spaces(openbis: Openbis) -> List[str]:
     spaces = openbis.get_spaces()
-    return spaces.df["code"][spaces.df["registrator"] != "system"].tolist()
+    return [
+        space["code"]
+        for space in spaces.response["objects"]
+        if space["registrator"]["userId"] != "system"
+    ]
 
 
 def get_projects(openbis: Openbis, user: str) -> List[str]:
     projects = openbis.get_projects(space=user)
-    return projects.df["identifier"].tolist()
+    return [
+        project["identifier"]["identifier"] for project in projects.response["objects"]
+    ]
 
 
 def get_experiments(openbis: Openbis, project: str) -> List[str]:
     experiments = openbis.get_experiments(project=project)
-    return experiments.df["identifier"].tolist()
+    return [
+        experiment["identifier"]["identifier"]
+        for experiment in experiments.response["objects"]
+    ]
 
 
 def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[str]:
     datasets = openbis.get_datasets(
         experiment=experiment, type=dataset_type, props=["$NAME"]
     )
-    return datasets.df["$NAME"].tolist()
+    return [dataset["properties"]["$NAME"] for dataset in datasets.response]
 
 
 def upload_new_dataset(
@@ -202,4 +212,5 @@ def main(args: argparse.Namespace):
 
 if __name__ == "__main__":
     args = get_args()
+    openbis = get_openbis(CONFIG)
     main(args)
