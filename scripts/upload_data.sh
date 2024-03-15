@@ -16,6 +16,8 @@ GEL_SCAN_DIR="/Volumes/chab_loc_bode_s1/Instruments/ChemiDoc Gel Scanner"
 NANODROP_DIR="/Volumes/chab_loc_bode_s1/Instruments/NanoDrop"
 PLATE_READER_DIR="/Volumes/chab_loc_bode_s1/Instruments/Plate reader"
 POLARIMETER_DIR="/Volumes/chab_loc_bode_s1/Instruments/Polarimeter/Current data (backup)/Bode group"
+NMR_DIR="/Volumes/chab_loc_bode_s1/Instruments/NMR/NMRtoOpenBIS"
+SYMPHONY_DIR="/Volumes/chab_loc_bode_s1/Instruments/Symphony_X"
 
 
 $PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - "
@@ -31,3 +33,5 @@ $PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type NANODROP --datas
 $PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type GEL_SCAN --dataset_ab_dir "${GEL_SCAN_DIR}" --hierarchy "*/ChemiDoc Images 2024*/*.jpg" "*/ChemiDoc Images 2024*/*.scn" --ab_prefix "" #The year needs to be changed according to the current year. Please don't forget :)
 $PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type PLATE_READER --dataset_ab_dir "${PLATE_READER_DIR}" --hierarchy "**/*.xlsx" --ab_prefix ""
 $PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type POLARIMETER --dataset_ab_dir "${POLARIMETER_DIR}" --hierarchy "**/*.txt" --ab_prefix ""
+$PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type NMR_RAW --dataset_ab_dir "${NMR_DIR}" --hierarchy "*.zip" --ab_prefix ""
+$PYTHON $ROOD_DIR/src/bode_loader/upload_data.py --dataset_type SPPS_REPORT --dataset_ab_dir "${SYMPHONY_DIR}" --hierarchy "Exported_Reports/*.pdf" --ab_prefix "SYNTHESIS-"
