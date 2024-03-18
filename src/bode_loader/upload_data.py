@@ -1,69 +1,19 @@
 import argparse
-import logging
-import sys
 from pathlib import Path
-from typing import Dict, List
+from typing import List
 
 from pybis import Openbis
 
-from bode_loader.utils import get_config, timeit
-
-CONFIG = get_config()
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-log_formatter = logging.Formatter(
-    "[%(asctime)s] [%(levelname)s] [%(filename)s:%(lineno)d:%(funcName)s] %(message)s"
+from bode_loader.openbis_helper import (
+    get_all_spaces,
+    get_datasets,
+    get_experiments,
+    get_openbis,
+    get_projects,
 )
-for handler in logger.handlers:
-    logger.removeHandler(handler)
-handler_out = logging.StreamHandler(sys.stdout)
-handler_out.setFormatter(log_formatter)
-logger.addHandler(handler_out)
+from bode_loader.utils import get_bode_logger, timeit
 
-
-def get_openbis(config: Dict = CONFIG) -> Openbis:
-    """get openbis instance
-
-    Args:
-        config (Dict, optional): config of openbis setting. Defaults to CONFIG.
-
-    Returns:
-        Openbis: openbis instance
-    """
-    return Openbis(config["host"]["host_name"], token=config["host"]["token"])
-
-
-@timeit
-def get_all_spaces(openbis: Openbis) -> List[str]:
-    spaces = openbis.get_spaces()
-    return [
-        space["code"]
-        for space in spaces.response["objects"]
-        if space["registrator"]["userId"] != "system"
-    ]
-
-
-def get_projects(openbis: Openbis, user: str) -> List[str]:
-    projects = openbis.get_projects(space=user)
-    return [
-        project["identifier"]["identifier"] for project in projects.response["objects"]
-    ]
-
-
-def get_experiments(openbis: Openbis, project: str) -> List[str]:
-    experiments = openbis.get_experiments(project=project)
-    return [
-        experiment["identifier"]["identifier"]
-        for experiment in experiments.response["objects"]
-    ]
-
-
-def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[str]:
-    datasets = openbis.get_datasets(
-        experiment=experiment, type=dataset_type, props=["$NAME"]
-    )
-    return [dataset["properties"]["$NAME"] for dataset in datasets.response]
+LOGGER = get_bode_logger(__name__)
 
 
 def upload_new_dataset(
@@ -89,7 +39,7 @@ def return_new_idx(
 
     Args:
         openbis (Openbis): openbis instance
-        experiment (str): experiment code, e.t., "/{usr}/projectname/experimentname"
+        experiment (str): experiment code, e.t., "/{usr}/projectcode/experimentcode"
         dataset_type (str): dataset type, e.g., "COMPACT", "RAW", etc.
         data_names (List[Path]): list of data names
 
@@ -106,7 +56,7 @@ def return_new_idx(
     return new_idx
 
 
-@timeit
+@timeit(LOGGER)
 def get_all_files(
     instrument_dir: Path, hierarchy: List[str] = ["*/pdf/*.pdf"]
 ) -> List[Path]:
@@ -156,18 +106,16 @@ def get_args():
     return args
 
 
-def main(args: argparse.Namespace):
+def main(args: argparse.Namespace, openbis: Openbis):
     dataset_ab_dir = Path(args.dataset_ab_dir)
 
-    openbis = get_openbis(CONFIG)
-
     all_dataset = get_all_files(dataset_ab_dir, hierarchy=args.hierarchy)
-    logger.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
+    LOGGER.info(f"Found {len(all_dataset)} matching files in {dataset_ab_dir}")
     if len(all_dataset) == 0:
         return 1
 
     users = get_all_spaces(openbis)  # all the users' spaces
-    logger.info(f"There are {len(users)} registered users in openBIS: {users}")
+    LOGGER.info(f"There are {len(users)} registered users in openBIS: {users}")
 
     # space for all users
     # per user project/ experiment
@@ -176,15 +124,15 @@ def main(args: argparse.Namespace):
         user_files = [
             fn for fn in all_dataset if f"{user.upper()}" in str(fn.name).upper()
         ]
-        logger.info(f"Processing user: {user}, has {len(user_files)} files")
+        LOGGER.info(f"Processing user: {user}, has {len(user_files)} files")
         if len(user_files) == 0:
             continue
         for proj in get_projects(
             openbis=openbis, user=user
-        ):  # proj = "/{usr}/projectname/"
+        ):  # proj = "/{usr}/projectcode/"
             for exp in get_experiments(
                 openbis=openbis, project=proj
-            ):  # exp = "/{usr}/projectname/experimentname/"
+            ):  # exp = "/{usr}/projectcode/experimentcode/"
                 data_prefix = "-".join(exp.upper().split("/")[1:])
                 data_names = [
                     fn
@@ -207,10 +155,10 @@ def main(args: argparse.Namespace):
                         dataset_type=args.dataset_type,
                         data_name=data_name,
                     )
-    openbis.logout()
 
 
 if __name__ == "__main__":
     args = get_args()
-    openbis = get_openbis(CONFIG)
-    main(args)
+    openbis = get_openbis()
+    main(args, openbis)
+    openbis.logout()
