@@ -20,7 +20,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         "--save_path",
         type=Path,
-        default="exp_structure.json",
+        default="space_structure.json",
         help="save path",
     )
     return parser.parse_args()

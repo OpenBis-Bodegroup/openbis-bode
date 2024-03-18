@@ -100,7 +100,7 @@ def get_args():
     parser.add_argument(
         "--space_structure_path",
         type=Path,
-        default="exp_structure.json",
+        default="space_structure.json",
         help="path to the space structure json",
     )
     args = parser.parse_args()
