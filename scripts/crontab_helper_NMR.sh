@@ -7,6 +7,7 @@ PYTHON="${ROOD_DIR}/env/bin/python"
 LOCK_FILE=/tmp/NMR_to_openBIS_lock.txt
 
 
+
 echo "("$(date +"%T")") Checking for lock file..."
 
 # Check if the lock file exists
@@ -25,7 +26,7 @@ echo "("$(date +"%T")") Lock file created."
 # Execute NMR_to_openBIS script
 
 
-$PYTHON /Users/bodegroup/OpenBis/openbis-bode/src/bode_loader/NMR_to_openBIS.py
+$PYTHON $ROOD_DIR/src/bode_loader/NMR_to_openBIS.py
 
 echo "("$(date +"%T")") NMR to openBIS script finished"
 
