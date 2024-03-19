@@ -217,4 +217,4 @@ def main(args: argparse.Namespace):
 if __name__ == "__main__":
     args = get_args()
     openbis = get_openbis(CONFIG)
-    # main(args)
+    main(args)
