@@ -85,4 +85,8 @@ def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[s
     datasets = openbis.get_datasets(
         experiment=experiment, type=dataset_type, props=["$NAME"]
     )
-    return [dataset["properties"]["$NAME"] for dataset in datasets.response]
+    return_datasets = []
+    for dataset in datasets.response:
+        if "$NAME" in dataset["properties"].keys():
+            return_datasets.append(dataset["properties"]["$NAME"])
+    return return_datasets
