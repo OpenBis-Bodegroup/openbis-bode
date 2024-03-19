@@ -64,7 +64,7 @@ def get_datasets(openbis: Openbis, experiment: str, dataset_type: str) -> List[s
         experiment=experiment, type=dataset_type, props=["$NAME"]
     )
     return_datasets = []
-    for dataset in datasets.response["objects"]:
+    for dataset in datasets.response:
         if "$NAME" in dataset["properties"].keys():
             return_datasets.append(dataset["properties"]["$NAME"])
     return return_datasets
@@ -217,4 +217,4 @@ def main(args: argparse.Namespace):
 if __name__ == "__main__":
     args = get_args()
     openbis = get_openbis(CONFIG)
-    main(args)
+    # main(args)
