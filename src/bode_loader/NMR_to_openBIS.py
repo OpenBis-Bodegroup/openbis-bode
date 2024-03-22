@@ -15,7 +15,7 @@ import json
 from zipfile import ZipFile
 
 # Define source and destination directories
-source_pattern = "/Volumes/chab_loc_nmr_s2-1/bode/*/*.zip" # nmr server address
+source_pattern = "/Volumes/chab_loc_nmr_s2/bode/*/*.zip" # nmr server address
 tmp_extraction_dir = "/tmp/openbis/nmr/extracted" # temporary directory to extract zip files
 tmp_destination_dir = "/tmp/openbis/nmr/dest" # temporary directory to prepare folders for compression
 final_destination_dir = "/Volumes/chab_loc_bode_s1/Instruments/NMR/NMRtoOpenBIS"
