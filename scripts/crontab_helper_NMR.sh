@@ -26,7 +26,7 @@ echo "("$(date +"%T")") Lock file created."
 # Execute NMR_to_openBIS script
 
 
-$PYTHON $ROOD_DIR/src/bode_loader/NMR_to_openBIS.py
+$PYTHON -m bode_loader.NMR_to_openBIS
 
 echo "("$(date +"%T")") NMR to openBIS script finished"
 
