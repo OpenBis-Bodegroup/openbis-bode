@@ -24,6 +24,10 @@ SYMPHONY_DIR="/Volumes/chab_loc_bode_s1/Instruments/Symphony_X"
 $PYTHON -m bode_loader.fetch_space_structure --save_path $SPACE_STRUCTURE_PATH
 
 # Upload data
+# TODO: In the future, if following process gets too slow,
+# 1) we can parallelize the upload process by running each upload command in a separate process.
+#    search 'parallel bash forloop'
+# 2) discuss with openbis team to implement a more efficient way to upload data (or faster fetch api).
 $PYTHON -m bode_loader.upload_data --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_reprocessed/*" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type MALDI --dataset_ab_dir $MALDI_DIR --hierarchy "Bruker-Microflex-1/*/pdf/*.pdf" "Bruker-Microflex-2/*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
