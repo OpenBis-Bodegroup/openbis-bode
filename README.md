@@ -3,9 +3,11 @@
 This repository contains the code to register & synchronize data in openBIS by connecting to the raw data in the Bode group & external ETH servers.
 
 Main functionalities:
-1. Fetch User-Project-Experiment structure from openBIS: [fetch_spact_structure.py](src/bode_loader/fetch_space_structure.py)
+1. Fetch User-Project-Experiment structure from openBIS: [fetch_space_structure.py](src/bode_loader/fetch_space_structure.py)
 2. Fetch data from the Bode group (and other data storage) servers and upload the new data to openBIS: [upload_data.py](src/bode_loader/upload_data.py)
 3. Transform NMR data to a format that can be uploaded to openBIS: [NMR_to_openBIS.py](src/bode_loader/NMR_to_openBIS.py)
+
+For the regular registration of the data, the scripts, [upload_data.sh](scripts/upload_data.sh) and [crontab_helper_NMR.sh](scripts/crontab_helper_NMR.sh), are used and are run as cron jobs on the server.
 
 The main documentation is here: https://openbis.readthedocs.io/en/latest/software-developer-documentation/apis/python-v3-api.html
 
