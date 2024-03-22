@@ -129,14 +129,14 @@ def main(args: argparse.Namespace, openbis: Openbis):
         midfix = user_structure["midfix"]
 
         user_files = []
-        user_exp_fix = []
+        user_exp_fix = set()
         for fn in all_dataset:
             for exp, fix in zip(user_structure["experiments"], midfix):
                 if (f"{user.upper()}" in str(fn.name).upper()) and (
                     fix in str(fn.name).upper()
                 ):
                     user_files.append(fn)
-                    user_exp_fix.append((exp, fix))
+                    user_exp_fix.add((exp, fix))
                     break
         LOGGER.info(
             f"Processing user: {user}, has {len(user_files)} files \
