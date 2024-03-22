@@ -7,6 +7,7 @@ PYTHON="${ROOD_DIR}/env/bin/python"
 LOCK_FILE=/tmp/NMR_to_openBIS_lock.txt
 
 
+
 echo "("$(date +"%T")") Checking for lock file..."
 
 # Check if the lock file exists
