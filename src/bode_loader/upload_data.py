@@ -128,16 +128,23 @@ def main(args: argparse.Namespace, openbis: Openbis):
         user = user_structure["name"]
         midfix = user_structure["midfix"]
 
-        user_files = [
-            fn
-            for fn in all_dataset
-            if (f"{user.upper()}" in str(fn.name).upper())
-            and any(fix in str(fn.name).upper() for fix in midfix)
-        ]
-        LOGGER.info(f"Processing user: {user}, has {len(user_files)} files")
+        user_files = []
+        user_exp_fix = []
+        for fn in all_dataset:
+            for exp, fix in zip(user_structure["experiments"], midfix):
+                if (f"{user.upper()}" in str(fn.name).upper()) and (
+                    fix in str(fn.name).upper()
+                ):
+                    user_files.append(fn)
+                    user_exp_fix.append((exp, fix))
+                    break
+        LOGGER.info(
+            f"Processing user: {user}, has {len(user_files)} files \
+in {len(user_exp_fix)} experiments."
+        )
         if len(user_files) == 0:
             continue
-        for exp, fix in zip(user_structure["experiments"], midfix):
+        for exp, fix in user_exp_fix:
             data_names = [
                 fn for fn in user_files if f"{args.ab_prefix}{fix}" in fn.name
             ]
