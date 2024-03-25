@@ -1,9 +1,9 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-ROOD_DIR="$(dirname "$SCRIPT_DIR")"
-PYTHON="${ROOD_DIR}/env/bin/python"
-SPACE_STRUCTURE_PATH="${ROOD_DIR}/space_structure.json"
+ROOT_DIR="$(dirname "$SCRIPT_DIR")"
+PYTHON="${ROOT_DIR}/env/bin/python"
+SPACE_STRUCTURE_PATH="${ROOT_DIR}/space_structure.json"
 
 COMPACT_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Compact-1"
 COMPACT_REPRO_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Compact-1-Repro"
