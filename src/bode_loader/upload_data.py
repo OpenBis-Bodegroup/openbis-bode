@@ -93,7 +93,7 @@ def get_args():
     )
     parser.add_argument(
         "--ab_prefix",
-        type=Path,
+        type=str,
         default="Bode - ",
         help="absolute prefix of the pdf file name",
     )
@@ -137,7 +137,7 @@ def main(args: argparse.Namespace, openbis: Openbis):
                 ):
                     user_files.append(fn)
                     user_exp_fix.add((exp, fix))
-                    break
+                    continue
         LOGGER.info(
             f"Processing user: {user}, has {len(user_files)} files \
 in {len(user_exp_fix)} experiments."
@@ -145,9 +145,7 @@ in {len(user_exp_fix)} experiments."
         if len(user_files) == 0:
             continue
         for exp, fix in user_exp_fix:
-            data_names = [
-                fn for fn in user_files if f"{args.ab_prefix}{fix}" in fn.name
-            ]
+            data_names = [fn for fn in user_files if args.ab_prefix + fix in fn.name]
             # check if dataset already exists
             new_idx = return_new_idx(
                 openbis=openbis,
@@ -164,6 +162,7 @@ in {len(user_exp_fix)} experiments."
                     dataset_type=args.dataset_type,
                     data_name=data_name,
                 )
+                LOGGER.info(f"upload {data_name.name} to {exp}")
 
 
 if __name__ == "__main__":
