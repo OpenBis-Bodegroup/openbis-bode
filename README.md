@@ -1,5 +1,7 @@
 # OpenBIS Bode group data registration
 
+**THIS REPOSITORY IS ARCHIVED ON 5TH APR 2024, PLEASE RECIRECT TO https://github.com/OpenBis-Bodegroup/openbis-bode**
+
 This repository contains the code to register & synchronize data in openBIS by connecting to the raw data in the Bode group & external ETH servers.
 
 Main functionalities:
