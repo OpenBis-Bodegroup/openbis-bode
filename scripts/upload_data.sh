@@ -5,7 +5,7 @@ ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 PYTHON="${ROOT_DIR}/env/bin/python"
 SPACE_STRUCTURE_PATH="${ROOT_DIR}/space_structure.json"
 
-COMPACT_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Compact-1"
+COMPACT_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode"
 COMPACT_REPRO_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Compact-1-Repro"
 MALDI_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode"
 AMAZON_LCMS_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Amazon-1"
@@ -29,7 +29,7 @@ $PYTHON -m bode_loader.fetch_space_structure --save_path $SPACE_STRUCTURE_PATH
 # 1) we can parallelize the upload process by running each upload command in a separate process.
 #    search 'parallel bash forloop'
 # 2) discuss with openbis team to implement a more efficient way to upload data (or faster fetch api).
-$PYTHON -m bode_loader.upload_data --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
+$PYTHON -m bode_loader.upload_data --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "Bruker-Compact-1/*/pdf/*.pdf" "Bruker-Compact-2/*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_reprocessed/*" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type MALDI --dataset_ab_dir $MALDI_DIR --hierarchy "Bruker-Microflex-1/*/pdf/*.pdf" "Bruker-Microflex-2/*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type AMAZON-LCMS --dataset_ab_dir $AMAZON_LCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
