@@ -19,7 +19,7 @@ PLATE_READER_DIR="/Volumes/chab_loc_bode_s1/Instruments/Plate reader"
 POLARIMETER_DIR="/Volumes/chab_loc_bode_s1/Instruments/Polarimeter/Current data (backup)/Bode group"
 NMR_DIR="/Volumes/chab_loc_bode_s1/Instruments/NMR/NMRtoOpenBIS"
 SYMPHONY_DIR="/Volumes/chab_loc_bode_s1/Instruments/Symphony_X"
-KNAUER_HPLC_DIR= "/Volumes/chab_loc_bode_s1/Instruments/HPLC Knauer/Data/ETH"
+KNAUER_HPLC_DIR="/Volumes/chab_loc_bode_s1/Instruments/HPLC Knauer/Data/ETH"
 
 # Fetch space structure
 $PYTHON -m bode_loader.fetch_space_structure --save_path $SPACE_STRUCTURE_PATH
