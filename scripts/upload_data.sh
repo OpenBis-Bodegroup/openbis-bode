@@ -8,7 +8,7 @@ SPACE_STRUCTURE_PATH="${ROOT_DIR}/space_structure.json"
 COMPACT_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode"
 COMPACT_REPRO_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Compact-1-Repro"
 MALDI_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode"
-AMAZON_LCMS_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Bruker-Amazon-1"
+AMAZON_LCMS_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode"
 AGILENT_LCMS_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode"
 AGILENT_GCMS_DIR="/Volumes/chab_mobias_oadata/OpenAccess/DCHAB/LOC/Bode/Agilent-GC-5975-MSD-1"
 HPLC_DIR="/Volumes/chab_loc_bode_s1/Instruments"
@@ -32,7 +32,7 @@ $PYTHON -m bode_loader.fetch_space_structure --save_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type COMPACT --dataset_ab_dir $COMPACT_DIR --hierarchy "Bruker-Compact-1/*/pdf/*.pdf" "Bruker-Compact-2/*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type COMPACT-REPRO --dataset_ab_dir $COMPACT_REPRO_DIR --hierarchy "*/data_reprocessed/*" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type MALDI --dataset_ab_dir $MALDI_DIR --hierarchy "Bruker-Microflex-1/*/pdf/*.pdf" "Bruker-Microflex-2/*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
-$PYTHON -m bode_loader.upload_data --dataset_type AMAZON-LCMS --dataset_ab_dir $AMAZON_LCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
+$PYTHON -m bode_loader.upload_data --dataset_type AMAZON-LCMS --dataset_ab_dir $AMAZON_LCMS_DIR --hierarchy "Bruker-Amazon-1/*/pdf/*.pdf" "Bruker-Amazon-2/*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type AGILENT-LCMS --dataset_ab_dir $AGILENT_LCMS_DIR --hierarchy "Agilent-G6120C-1/*/pdf/*.pdf" "Agilent-G6135C-1/*/pdf/*.pdf" --ab_prefix "Bode_"  --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type AGILENT-GCMS --dataset_ab_dir $AGILENT_GCMS_DIR --hierarchy "*/pdf/*.pdf" --ab_prefix "Bode - " --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type HPLC --dataset_ab_dir "${HPLC_DIR}" --hierarchy "HPLC reversed phase F310 (former F316)/HPLC data synchronized/**/*.pdf" "HPLC reversed phase F310 (former F316)/HPLC data synchronized/**/*.png" "HPLC reversed phase F316/HPLC Data/**/*.pdf" "HPLC reversed phase F316/HPLC Data/**/*.png" "HPLC reversed phase automated:SEC F318/Exported data/**/*.pdf" "HPLC reversed phase automated:SEC F318/Exported data/**/*.png" "HPLC reversed phase F318/Exported data/**/*.pdf" "HPLC reversed phase F318/Exported data/**/*.png" "HPLC Dionex/**/*.pdf" "HPLC Dionex/**/*.png" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
