@@ -16,6 +16,7 @@ IR_DIR="/Volumes/chab_loc_bode_s1/Instruments/IR/Current data (backup)/Bode grou
 GEL_SCAN_DIR="/Volumes/chab_loc_bode_s1/Instruments/ChemiDoc Gel Scanner"
 NANODROP_DIR="/Volumes/chab_loc_bode_s1/Instruments/NanoDrop"
 PLATE_READER_DIR="/Volumes/chab_loc_bode_s1/Instruments"
+PLATE_READER_OLD_DIR="/Volumes/chab_loc_bode_s1/Instruments"
 POLARIMETER_DIR="/Volumes/chab_loc_bode_s1/Instruments/Polarimeter/Current data (backup)/Bode group"
 NMR_DIR="/Volumes/chab_loc_bode_s1/Instruments/NMR/NMRtoOpenBIS"
 SYMPHONY_DIR="/Volumes/chab_loc_bode_s1/Instruments/Symphony_X"
@@ -40,7 +41,8 @@ $PYTHON -m bode_loader.upload_data --dataset_type HPLC_RAW --dataset_ab_dir "${H
 $PYTHON -m bode_loader.upload_data --dataset_type IR --dataset_ab_dir "${IR_DIR}" --hierarchy "**/*.pdf" "*/*.txt" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type NANODROP --dataset_ab_dir "${NANODROP_DIR}" --hierarchy "**/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type GEL_SCAN --dataset_ab_dir "${GEL_SCAN_DIR}" --hierarchy "*/ChemiDoc Images 2024*/*.jpg" "*/ChemiDoc Images 2024*/*.scn" --ab_prefix ""  --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
-$PYTHON -m bode_loader.upload_data --dataset_type PLATE_READER --dataset_ab_dir "${PLATE_READER_DIR}" --hierarchy "Plate reader/*/*.xlsx" "Plate reader new/**/*.xlsx" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
+$PYTHON -m bode_loader.upload_data --dataset_type PLATE_READER --dataset_ab_dir "${PLATE_READER_DIR}" --hierarchy "Plate reader new/**/*.xlsx" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
+$PYTHON -m bode_loader.upload_data --dataset_type PLATE_READER --dataset_ab_dir "${PLATE_READER_OLD_DIR}" --hierarchy "**/*.xlsx" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type POLARIMETER --dataset_ab_dir "${POLARIMETER_DIR}" --hierarchy "**/*.txt" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type NMR_RAW --dataset_ab_dir "${NMR_DIR}" --hierarchy "*.zip" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type SPPS_REPORT --dataset_ab_dir "${SYMPHONY_DIR}" --hierarchy "Exported_Reports/*.pdf" --ab_prefix "SYNTHESIS-" --space_structure_path $SPACE_STRUCTURE_PATH
