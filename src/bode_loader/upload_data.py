@@ -126,17 +126,16 @@ def main(args: argparse.Namespace, openbis: Openbis):
 
     for user_structure in space_structure["users"]:
         user = user_structure["name"]
-        midfix = user_structure["midfix"]
+        midfix_list = user_structure["midfix"]
 
         user_files = []
         user_exp_fix = set()
+    
         for fn in all_dataset:
-            for exp, fix in zip(user_structure["experiments"], midfix):
-                if (f"{user.upper()}" in str(fn.name).upper()) and (
-                    fix in str(fn.name).upper()
-                ):
+            for exp, fix_variants in zip(user_structure["experiments"], midfix_list):
+                if (f"{user.upper()}" in str(fn.name).upper()) and any(fix in str(fn.name).upper() for fix in fix_variants):
                     user_files.append(fn)
-                    user_exp_fix.add((exp, fix))
+                    user_exp_fix.add((exp, tuple(fix_variants)))
                     continue
         LOGGER.info(
             f"Processing user: {user}, has {len(user_files)} files \
@@ -145,7 +144,7 @@ in {len(user_exp_fix)} experiments."
         if len(user_files) == 0:
             continue
         for exp, fix in user_exp_fix:
-            data_names = [fn for fn in user_files if args.ab_prefix + fix in fn.name]
+            data_names = [fn for fn in user_files if any(args.ab_prefix + suffix in fn.name for suffix in fix)]
             # check if dataset already exists
             new_idx = return_new_idx(
                 openbis=openbis,
@@ -163,7 +162,6 @@ in {len(user_exp_fix)} experiments."
                     data_name=data_name,
                 )
                 LOGGER.info(f"upload {data_name.name} to {exp}")
-
 
 if __name__ == "__main__":
     args = get_args()

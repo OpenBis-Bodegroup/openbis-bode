@@ -36,7 +36,8 @@ def main(args: argparse.Namespace, openbis: Openbis):
         for project in get_projects(openbis, user):
             for experiment in get_experiments(openbis, project):
                 experiments.append(experiment)
-                midfix.append("-".join(experiment.upper().split("/")[1:]) + "-")
+                base_fix = "-".join(experiment.upper().split("/")[1:])
+                midfix.append([base_fix + "-", base_fix + "_", base_fix + "."])
 
         user_structure = {
             "name": user,
