@@ -144,7 +144,7 @@ in {len(user_exp_fix)} experiments."
         if len(user_files) == 0:
             continue
         for exp, fix in user_exp_fix:
-            data_names = [fn for fn in user_files if args.ab_prefix + fix in fn.name]
+            data_names = [fn for fn in user_files if any(args.ab_prefix + suffix in fn.name for suffix in fix)]
             # check if dataset already exists
             new_idx = return_new_idx(
                 openbis=openbis,
