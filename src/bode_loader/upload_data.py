@@ -155,12 +155,12 @@ in {len(user_exp_fix)} experiments."
             data_names = [data_names[idx] for idx in new_idx]
             # upload new datasets
             for data_name in data_names:
-                # upload_new_dataset(
-                #     openbis=openbis,
-                #     experiment=exp,
-                #     dataset_type=args.dataset_type,
-                #     data_name=data_name,
-                # )
+                upload_new_dataset(
+                    openbis=openbis,
+                    experiment=exp,
+                    dataset_type=args.dataset_type,
+                    data_name=data_name,
+                )
                 LOGGER.info(f"[TEST MODE] Would upload {data_name.name} to {exp}")
 
 if __name__ == "__main__":
