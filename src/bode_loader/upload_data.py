@@ -161,7 +161,7 @@ in {len(user_exp_fix)} experiments."
                     dataset_type=args.dataset_type,
                     data_name=data_name,
                 )
-                LOGGER.info(f"[TEST MODE] Would upload {data_name.name} to {exp}")
+                LOGGER.info(f"upload {data_name.name} to {exp}")
 
 if __name__ == "__main__":
     args = get_args()
