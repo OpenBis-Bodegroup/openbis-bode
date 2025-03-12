@@ -14,7 +14,7 @@ import datetime
 from email.utils import parsedate_to_datetime
 from email.header import decode_header
 
-config_path = ''
+config_path = '/Users/bodegroup/OpenBis/openbis-bode/config/config.json'
 
 with open(config_path) as f:
     config = json.load(f)
