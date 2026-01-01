@@ -40,13 +40,13 @@ $PYTHON -m bode_loader.upload_data --dataset_type HPLC --dataset_ab_dir "${HPLC_
 $PYTHON -m bode_loader.upload_data --dataset_type HPLC_RAW --dataset_ab_dir "${HPLC_DIR}" --hierarchy "HPLC reversed phase F310 (former F316)/HPLC data synchronized/**/*.csv" "HPLC reversed phase F316/HPLC Data/**/*.csv" "HPLC reversed phase automated and SEC F318/Exported data/**/*.csv" "HPLC reversed phase F318/Exported data/**/*.csv" "HPLC Dionex/**/*.csv" "uHPLC reversed phase E316/HPLC Data/Current Users/**/*.csv" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type IR --dataset_ab_dir "${IR_DIR}" --hierarchy "**/*.pdf" "**/*.txt" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type NANODROP --dataset_ab_dir "${NANODROP_DIR}" --hierarchy "**/*.pdf" "**/*.txt" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
-$PYTHON -m bode_loader.upload_data --dataset_type GEL_SCAN --dataset_ab_dir "${GEL_SCAN_DIR}" --hierarchy "*/ChemiDoc Images 2026*/*.jpg" "*/ChemiDoc Images 2025*/*.scn" --ab_prefix ""  --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
+$PYTHON -m bode_loader.upload_data --dataset_type GEL_SCAN --dataset_ab_dir "${GEL_SCAN_DIR}" --hierarchy "*/ChemiDoc Images 2026*/*.jpg" "*/ChemiDoc Images 2026*/*.scn" --ab_prefix ""  --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
 $PYTHON -m bode_loader.upload_data --dataset_type PLATE_READER --dataset_ab_dir "${PLATE_READER_DIR}" --hierarchy "Plate reader new/**/*.xlsx" "Plate reader/**/*.xlsx" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type POLARIMETER --dataset_ab_dir "${POLARIMETER_DIR}" --hierarchy "**/*.txt" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type NMR_RAW --dataset_ab_dir "${NMR_DIR}" --hierarchy "*.zip" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type SPPS_REPORT --dataset_ab_dir "${SYMPHONY_DIR}" --hierarchy "Exported_Reports/*.pdf" --ab_prefix "SYNTHESIS-" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type KNAUER-HPLC --dataset_ab_dir "${KNAUER_HPLC_DIR}" --hierarchy "**/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
-$PYTHON -m bode_loader.upload_data --dataset_type ISOLERA --dataset_ab_dir "${ISOLERA_DIR}" --hierarchy "2025/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
+$PYTHON -m bode_loader.upload_data --dataset_type ISOLERA --dataset_ab_dir "${ISOLERA_DIR}" --hierarchy "2026/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
 
 # Remove space structure
 rm $SPACE_STRUCTURE_PATH
