@@ -46,7 +46,7 @@ $PYTHON -m bode_loader.upload_data --dataset_type POLARIMETER --dataset_ab_dir "
 $PYTHON -m bode_loader.upload_data --dataset_type NMR_RAW --dataset_ab_dir "${NMR_DIR}" --hierarchy "*.zip" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type SPPS_REPORT --dataset_ab_dir "${SYMPHONY_DIR}" --hierarchy "Exported_Reports/*.pdf" --ab_prefix "SYNTHESIS-" --space_structure_path $SPACE_STRUCTURE_PATH
 $PYTHON -m bode_loader.upload_data --dataset_type KNAUER-HPLC --dataset_ab_dir "${KNAUER_HPLC_DIR}" --hierarchy "**/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH
-$PYTHON -m bode_loader.upload_data --dataset_type ISOLERA --dataset_ab_dir "${ISOLERA_DIR}" --hierarchy "2026/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
+$PYTHON -m bode_loader.upload_data --dataset_type ISOLERA --dataset_ab_dir "${ISOLERA_DIR}" --hierarchy "2025/*.pdf" --ab_prefix "" --space_structure_path $SPACE_STRUCTURE_PATH #The year needs to be changed according to the current year. Please don't forget :)
 
 # Remove space structure
 rm $SPACE_STRUCTURE_PATH

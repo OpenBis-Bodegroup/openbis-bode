@@ -23,7 +23,7 @@ IMAP_SERVER = 'imap.gmail.com'
 EMAIL_ACCOUNT = config.get('email_account')
 PASSWORD = config.get('password')
 SEARCH_FROM = 'noreply@ethz.ch'
-DOWNLOAD_FOLDER = '/Volumes/chab_loc_bode_s1/Instruments/Isolera/2026'
+DOWNLOAD_FOLDER = '/Volumes/chab_loc_bode_s1/Instruments/Isolera/2025'
 
 def connect_to_email():
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
